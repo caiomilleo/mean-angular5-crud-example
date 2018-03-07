@@ -1,0 +1,87 @@
+<header>
+  <nav>
+    <img *ngIf="brflag" src="/assets/img/brazil.png" alt="Brazil Flag" (click)="onPortuguese()">
+    <img *ngIf="usflag" src="/assets/img/us.png" alt="US Flag" (click)="onEnglish()">
+  </nav>
+</header>
+
+
+<div *ngIf="portuguese" [ngClass]="messageClass">
+  {{ ptmessage }}
+</div>
+<div *ngIf="english" [ngClass]="messageClass">
+  {{ enmessage }}
+</div>
+
+
+<div class="container">
+  <form [formGroup]="formProduct" class="col-md-10">
+    <div class="row">
+      <div class="form-group">
+        <label *ngIf="portuguese">Nome</label>
+        <label *ngIf="english">Name</label>
+        <input type="text" formControlName="name" name="name" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label *ngIf="portuguese">Descrição</label>
+        <label *ngIf="english">Description</label>
+        <input type="text" formControlName="description" name="description" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label *ngIf="portuguese">Quantidade</label>
+        <label *ngIf="english">Quantity</label>
+        <input type="number" formControlName="quantity" name="quantity" class="form-control">
+      </div>
+    </div>
+
+    <div class="row">
+      <button [disabled]="!formProduct.valid" class="btn btn-primary" *ngIf="btnAddProduct" (click)="onAddProduct()"><i class="fa fa-save"></i></button>
+      <button [disabled]="!formProduct.valid" class="btn btn-primary" *ngIf="btnUpdateProduct" (click)="onUpdateProduct()"><i class="fa fa-pencil"></i></button>
+      <button class="btn btn-default" type="submit" *ngIf="btnUpdateProduct" (click)="onClean()"><i class="fa fa-ban"></i></button>
+    </div>
+
+  </form>
+
+  <div style="overflow-x:auto;" *ngIf="products?.length > 0">
+    <table class="table table-bordered col-md-10">
+      <thead>
+        <tr *ngIf="portuguese">
+          <th>Nome</th>
+          <th>Descrição</th>
+          <th>Quantidade</th>
+          <th>Editar</th>
+          <th>Excluir</th>
+        </tr>
+
+        <tr *ngIf="english">
+          <th>Name</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let product of products">
+          <th>{{ product.name }}</th>
+          <th>{{ product.description }}</th>
+          <th>{{ product.quantity }}</th>
+          <th>
+            <button class="btn btn-info" (click)="onGetProduct(product)"><i class="fa fa-refresh"></i></button>
+          </th>
+          <th>
+            <button class="btn btn-danger" (click)="onDeleteProduct(product._id)"><i class="fa fa-remove"></i></button>
+          </th>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+</div>
+
+<footer *ngIf="portuguese">Desenvolvido por @caiomilleo</footer>
+<footer *ngIf="english">Developed by @caiomilleo</footer>
